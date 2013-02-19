@@ -52,8 +52,6 @@ Usage
 -----
 
 ```php
-use Herrera\DateInterval\DateInterval;
-
 <?php
 
 /**
@@ -75,7 +73,7 @@ class Job
     private $interval;
 
     /**
-     * @return \DateInterval
+     * @return DateInterval
      */
     public function getInterval()
     {
@@ -83,22 +81,22 @@ class Job
     }
 
     /**
-     * @param \DateInterval $interval
+     * @param DateInterval $interval
      */
-    public function setInterval(\DateInterval $interval)
+    public function setInterval(DateInterval $interval)
     {
         $this->interval = $interval;
     }
 }
 
 $annualJob = new Job();
-$annualJob->setInterval(new \DateInterval('P1Y'));
+$annualJob->setInterval(new DateInterval('P1Y'));
 
 $monthlyJob = new Job();
-$monthlyJob->setInterval(new \DateInterval('P1M'));
+$monthlyJob->setInterval(new DateInterval('P1M'));
 
 $dailyJob = new Job();
-$dailyJob->setInterval(new \DateInterval('P1D'));
+$dailyJob->setInterval(new DateInterval('P1D'));
 
 $entityManager->persist($annualJob);
 $entityManager->persist($monthlyJob);
@@ -110,6 +108,8 @@ $jobs = $entityManager->createQuery(
     "SELECT j FROM Jobs j WHERE j.interval < DATE_INTERVAL('P1Y') ORDER BY j.interval ASC"
 )->getResult();
 
-echo DateInterval::toSpec($jobs[0]->getInterval()); // "P1D"
-echo DateInterval::toSpec($jobs[1]->getInterval()); // "P1M"
+echo $jobs[0]->getInterval()->toSpec(); // "P1D"
+echo $jobs[1]->getInterval()->toSpec(); // "P1M"
 ```
+
+> **NOTICE** The date interval instances returned are of `Herrera\DateInterval\DateInterval`.
