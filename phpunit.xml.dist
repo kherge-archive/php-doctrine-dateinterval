@@ -9,6 +9,9 @@
          stopOnSkipped="false"
          strict="true"
          verbose="false">
+  <php>
+    <ini name="error_reporting" value="E_ALL &amp; ~E_STRICT"/>
+  </php>
   <filter>
     <whitelist>
       <directory suffix=".php">src/lib/</directory>
