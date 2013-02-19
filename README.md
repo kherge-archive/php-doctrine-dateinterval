@@ -1,4 +1,4 @@
-php-doctrine-dateinterval
-=========================
+Doctrine DateInterval Type
+==========================
 
-Adds DateInterval support to Doctrine 2.
+Adds a DateInterval type to Doctrine ORM.
