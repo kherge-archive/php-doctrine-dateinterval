@@ -1,0 +1,40 @@
+{
+    "name": "herrera-io/doctrine-dateinterval",
+    "description": "Supports DateInterval in Doctrine DBAL and ORM.",
+    "keywords": ["doctrine", "date", "interval"],
+    "homepage": "http://herrera-io.github.com/php-doctrine-dateinterval",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Herrera",
+            "email": "kevin@herrera.io",
+            "homepage": "http://kevin.herrera.io"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/herrera-io/php-doctrine-dateinterval/issues"
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/dbal": ">=2.2.3,<2.4-dev",
+        "herrera-io/date-interval": ">=1.1,<2.0-dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Herrera\\Doctrine": "src/lib"
+        }
+    },
+    "config": {
+        "bin-dir": "bin",
+        "vendor-dir": "src/vendors"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
