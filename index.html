@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Doctrine DateInterval by herrera-io</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Doctrine DateInterval</h1>
+        <p>Supports DateInterval in Doctrine DBAL and ORM.</p>
+
+        <p class="view"><a href="https://github.com/herrera-io/php-doctrine-dateinterval">View the Project on GitHub <small>herrera-io/php-doctrine-dateinterval</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/herrera-io/php-doctrine-dateinterval/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/herrera-io/php-doctrine-dateinterval/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/herrera-io/php-doctrine-dateinterval">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Doctrine DateInterval Type</h1>
+
+<p><a href="https://travis-ci.org/herrera-io/php-doctrine-dateinterval"><img src="https://travis-ci.org/herrera-io/php-doctrine-dateinterval.png?branch=master" alt="Build Status"></a></p>
+
+<p>Supports DateInterval in Doctrine DBAL and ORM.</p>
+
+<h2>Summary</h2>
+
+<p>The <code>DateInterval</code> library</p>
+
+<ul>
+<li>adds a <code>dateinterval</code> type to DBAL</li>
+<li>adds a <code>DATE_INTERVAL</code> DQL function to ORM</li>
+</ul><p>This is made possible by the <a href="https://github.com/herrera-io/php-date-interval"><code>DateInterval</code></a> library.</p>
+
+<h2>Installation</h2>
+
+<p>Add it to your list of Composer dependencies:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>composer require herrera-io/doctrine-dateinterval<span class="o">=</span>1.*
+</pre></div>
+
+<p>Register it with Doctrine DBAL:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Doctrine\DBAL\Types\Type</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Herrera\Doctrine\DBAL\Types\DateIntervalType</span><span class="p">;</span>
+
+<span class="nx">Type</span><span class="o">::</span><span class="na">addType</span><span class="p">(</span>
+    <span class="nx">DateIntervalType</span><span class="o">::</span><span class="na">DATEINTERVAL</span><span class="p">,</span>
+    <span class="s1">'Herrera\\Doctrine\\DBAL\\Types\\DateIntervalType'</span>
+<span class="p">);</span>
+</pre></div>
+
+<p>Register it with Doctrine ORM:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">getConfiguration</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">addCustomDatetimeFunction</span><span class="p">(</span>
+    <span class="s1">'Herrera\\Doctrine\\ORM\\Query\\AST\\Functions\\DateIntervalFunction'</span>
+<span class="p">);</span>
+</pre></div>
+
+<h2>Usage</h2>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * @Entity()</span>
+<span class="sd"> * @Table(name="Jobs")</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Job</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @Column(type="integer")</span>
+<span class="sd">     * @GeneratedValue(strategy="AUTO")</span>
+<span class="sd">     * @Id()</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$id</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @Column(type="dateinterval")</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$interval</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @return DateInterval</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getInterval</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">interval</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @param DateInterval $interval</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setInterval</span><span class="p">(</span><span class="nx">DateInterval</span> <span class="nv">$interval</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">interval</span> <span class="o">=</span> <span class="nv">$interval</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$annualJob</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Job</span><span class="p">();</span>
+<span class="nv">$annualJob</span><span class="o">-&gt;</span><span class="na">setInterval</span><span class="p">(</span><span class="k">new</span> <span class="nx">DateInterval</span><span class="p">(</span><span class="s1">'P1Y'</span><span class="p">));</span>
+
+<span class="nv">$monthlyJob</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Job</span><span class="p">();</span>
+<span class="nv">$monthlyJob</span><span class="o">-&gt;</span><span class="na">setInterval</span><span class="p">(</span><span class="k">new</span> <span class="nx">DateInterval</span><span class="p">(</span><span class="s1">'P1M'</span><span class="p">));</span>
+
+<span class="nv">$dailyJob</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Job</span><span class="p">();</span>
+<span class="nv">$dailyJob</span><span class="o">-&gt;</span><span class="na">setInterval</span><span class="p">(</span><span class="k">new</span> <span class="nx">DateInterval</span><span class="p">(</span><span class="s1">'P1D'</span><span class="p">));</span>
+
+<span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$annualJob</span><span class="p">);</span>
+<span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$monthlyJob</span><span class="p">);</span>
+<span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$dailyJob</span><span class="p">);</span>
+<span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
+<span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
+
+<span class="nv">$jobs</span> <span class="o">=</span> <span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">createQuery</span><span class="p">(</span>
+    <span class="s2">"SELECT j FROM Jobs j WHERE j.interval &lt; DATE_INTERVAL('P1Y') ORDER BY j.interval ASC"</span>
+<span class="p">)</span><span class="o">-&gt;</span><span class="na">getResult</span><span class="p">();</span>
+
+<span class="k">echo</span> <span class="nv">$jobs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getInterval</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">toSpec</span><span class="p">();</span> <span class="c1">// "P1D"</span>
+<span class="k">echo</span> <span class="nv">$jobs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getInterval</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">toSpec</span><span class="p">();</span> <span class="c1">// "P1M"</span>
+</pre></div>
+
+<blockquote>
+<p><strong>NOTICE</strong> The date interval instances returned are of <code>Herrera\DateInterval\DateInterval</code>.</p>
+</blockquote>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/herrera-io">herrera-io</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
