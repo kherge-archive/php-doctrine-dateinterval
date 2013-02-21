@@ -68,7 +68,15 @@
 <div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">getConfiguration</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">addCustomDatetimeFunction</span><span class="p">(</span>
+    <span class="s1">'DATE_INTERVAL'</span><span class="p">,</span>
     <span class="s1">'Herrera\\Doctrine\\ORM\\Query\\AST\\Functions\\DateIntervalFunction'</span>
+<span class="p">);</span>
+
+<span class="nv">$entityManager</span><span class="o">-&gt;</span><span class="na">getConnection</span><span class="p">()</span>
+              <span class="o">-&gt;</span><span class="na">getDatabasePlatform</span><span class="p">()</span>
+              <span class="o">-&gt;</span><span class="na">registerDoctrineTypeMapping</span><span class="p">(</span>
+    <span class="nx">DateIntervalType</span><span class="o">::</span><span class="na">DATEINTERVAL</span><span class="p">,</span>
+    <span class="nx">DateIntervalType</span><span class="o">::</span><span class="na">DATEINTERVAL</span>
 <span class="p">);</span>
 </pre></div>
 
