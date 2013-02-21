@@ -44,7 +44,15 @@ Register it with Doctrine ORM:
 <?php
 
 $entityManager->getConfiguration()->addCustomDatetimeFunction(
+    'DATE_INTERVAL',
     'Herrera\\Doctrine\\ORM\\Query\\AST\\Functions\\DateIntervalFunction'
+);
+
+$entityManager->getConnection()
+              ->getDatabasePlatform()
+              ->registerDoctrineTypeMapping(
+    DateIntervalType::DATEINTERVAL,
+    DateIntervalType::DATEINTERVAL
 );
 ```
 
