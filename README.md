@@ -56,6 +56,27 @@ $entityManager->getConnection()
 );
 ```
 
+When using Symfony2 with Doctrine you can do the same as above by only changing your configuration:
+
+```yaml
+# app/config/config.yml
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        # ...
+        mapping_types:
+            dateinterval: dateinterval
+        types:
+            dateinterval:  Herrera\Doctrine\DBAL\Types\DateIntervalType
+
+    orm:
+        # ...
+        dql:
+            datetime_functions:
+                DATE_INTERVAL: Herrera\Doctrine\ORM\Query\AST\Functions\DateIntervalFunction
+```
+
 Usage
 -----
 
